@@ -1,0 +1,22 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><%= label_tag t('By Sparrow R') %></a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/"><%= label_tag t('Home') %></a></li>
+    </ul>
+    <ul class="nav navbar-nav pull-right">
+      <% if user_signed_in? %>
+          <li><%= link_to (t('Hello')+', '+ current_user.email+'!'), '#', :class => 'pull-right' %></li>
+          <li><%= link_to t("Edit"), '/edit_profile', :method => :get %></li>
+          <li><%= link_to t("Log out"), destroy_user_session_path, :method => :delete %></li>
+      <% else %>
+          <li> <%= link_to (t ("Sign in")), "#sign_in", "data-toggle" => "modal" %> </li>
+          <li> <%= link_to (t ("Sign up")), "#sign_up", "data-toggle" => "modal" %> </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
+<%= render "devise/shared/sign_in" %>
+<%= render "devise/shared/sing_up" %>

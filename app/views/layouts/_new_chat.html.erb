@@ -1,0 +1,26 @@
+<div id="new_chat" class="modal fade">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <!-- Заголовок модального окна -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title"><%= t('Create new chat room') %></h4>
+      </div>
+      <!-- Основное содержимое модального окна -->
+      <div class="modal-body">
+        <%= form_for @chat_room do |f| %>
+            <div class="form-group">
+              <%= f.label t(:title) %>
+              <%= f.text_field :title, autofocus: true, class: 'form-control' %>
+            </div>
+            <%= f.submit t("Add"), class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+      <!-- Футер модального окна -->
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>

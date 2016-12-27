@@ -1,0 +1,56 @@
+<%= render "layouts/top-menu" %>
+<div class="well">
+  <h1><%= t('Chat rooms') %></h1>
+  <h2><%= t('Choose your room for chatting') %></h2>
+</div>
+<div class="container-fluid">
+  <div class="row bootstrap snippet">
+    <div class="col-sm-12">
+      <div class="main-box no-header clearfix">
+        <div class="main-box-body clearfix">
+          <div class="table-responsive">
+            <table class="table user-list">
+              <thead>
+              <tr>
+                <th><span><%= t('Chat name') %></span></th>
+                <th><span><%= t('Creator') %></span></th>
+                <th><span><%= t('Created at') %></span></th>
+                <th><span><%= t('Actions') %></span></th>
+                <th>&nbsp;</th>
+              </tr>
+              </thead>
+              <tbody>
+              <!-- ADD CHAT ROOMS -->
+              <% @chat_rooms.each do |room| %>
+                  <tr>
+                    <td>
+                      <%= room.title %>
+                    </td>
+                    <td>
+                      <%= User.find_by_id(room.user_id).last_name %> <%= User.find_by_id(room.user_id).first_name %>
+                    </td>
+                    <td>
+                      <%= room.created_at.day.to_s+'-'+room.created_at.month.to_s+'-'+room.created_at.year.to_s %>
+                    </td>
+                    <td>
+                      <%= link_to t('Enter'), chat_room_path(room), :class => 'btn btn-success btn-xs' %>
+                      <% if current_user.admin? %>
+                          <%= button_to t('Delete'), {:controller => :main,
+                                                      :action => 'chat_room_delete', :id => room.id},
+                                        :method => :delete, data: {confirm: t("Are you sure delete this chat room?")},
+                                        :class => 'btn btn-xs btn-danger' %>
+                      <% end %>
+                    </td>
+                  </tr>
+              <% end %>
+              <!-- END ADD CHAT ROOMS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <p><%= link_to t('New chat room'), "#new_chat", "data-toggle" => "modal", class: 'btn btn-primary btn-success'%></p>
+    </div>
+  </div>
+</div>
+<%= render "layouts/new_chat" %>

@@ -1,0 +1,45 @@
+<div id="sign_up" class="modal fade in">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Заголовок модального окна -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title"> <%= label_tag t('Registration')%></h4>
+      </div>
+      <!-- Основное содержимое модального окна -->
+      <div class="modal-body">
+        <%= form_for(User.new, url: registration_path(:user),
+                     html: {id: 'sign_up', :'data-type' => 'json'}, remote:true) do |f| %>
+
+            <div class="field">
+              <%= f.label t :email %><br />
+              <%= f.email_field :email, autofocus: true %>
+            </div>
+
+            <div class="field">
+              <%= f.label t :password %>
+              <% if @minimum_password_length %>
+                  <em>(<%= @minimum_password_length%><%= t("characters minimum") %>)</em>
+              <% end %><br />
+              <%= f.password_field :password, autocomplete: "off" %>
+            </div>
+
+            <div class="field">
+              <%= f.label t :password_confirmation %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "off" %>
+            </div>
+
+
+            <div class="actions">
+              <%= f.submit t("Sign up"), :class => 'btn btn-primary margin-top' %>
+            </div>
+        <% end %>
+
+</div>
+<!-- Футер модального окна -->
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal"><%= label_tag t'Close' %></button>
+</div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-block">
+    <div class="row">
+      <div class="col-md-1">
+        <% if message.user.avatar.url == "/avatars/original/missing.png" %>
+          <%= gravatar_for message.user %>
+        <% else %>
+           <img style="max-height: 40px;max-width: 40px" src="<%= message.user.avatar.url(:thumb) %>"/>
+        <% end %>
+      </div>
+      <div class="col-md-8">
+        <p class="card-text">
+          <span class="text-muted"><%= message.user.first_name %> - <%= message.timestamp %></span><br>
+          <%= message.body %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

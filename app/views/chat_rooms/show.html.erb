@@ -1,0 +1,46 @@
+<div class="container">
+  <%= render "layouts/top-menu" %>
+  <h1><%= @chat_room.title %> <%= %></h1>
+  <div class="container-fluid">
+    <div class="container-fluid">
+      <div id="messages" class="col-md-8 well" style="overflow-x: hidden; max-height: 350px" data-chat-room-id="<%= @chat_room.id %>">
+        <%= render @chat_room.messages %>
+      </div>
+      <div class="col-md-3 well pull-right">
+        <h2><%= t('User list') %> | <%= @user_list.length %></h2>
+        <ul>
+          <% @user_list.each do |user| %>
+              <li>
+                <%= user.first_name %>
+              </li>
+          <% end %>
+          <hr>
+          <div class="row">
+            <%= link_to t('Exit'), '/chat_rooms',
+                          form: {style: 'display:inline-block;'}, data: {confirm: t("Are you sure exit this chat room?")},
+                          :class => 'btn btn-xs btn-warning' %>
+            <% if current_user.admin? || @chat_room.user_id == current_user.id %>
+                <%= button_to t('Delete'), {:controller => :main,
+                                            :action => 'chat_room_delete', :id => @chat_room.id},
+                              :method => :delete, form: {style: 'display:inline-block;'}, data: {confirm: t("Are you sure delete this chat room?")},
+                              :class => 'btn btn-xs btn-danger' %>
+            <% end %>
+          </div>
+        </ul>
+      </div>
+      <div class="col-md-8 well">
+        <%= form_for @message, url: '#' do |f| %>
+            <%= hidden_field_tag 'chat_room_id', @chat_room.id %>
+            <div class="form-group">
+              <%= f.label t(:body) %>
+              <%= f.text_area :body, class: 'form-control' %>
+              <small class="text-muted"><%= t('From 2 to 1000 characters') %></small>
+            </div>
+
+            <%= f.submit t("Post"), class: 'btn btn-primary btn-xs' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
